@@ -1,0 +1,15 @@
+machine:
+  java:
+    version: openjdk8
+  services:
+    - rabbitmq-server
+    - redis
+
+test:
+  override:
+    - gradle cucumber
+
+dependencies:
+  pre:
+    - curl -s https://get.sdkman.io | bash
+    - sdk install gradle 3.3
