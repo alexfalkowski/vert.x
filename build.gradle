@@ -7,19 +7,38 @@ repositories {
   jcenter()
 }
 
+apply plugin: 'groovy'
+
 version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 mainClassName = 'io.vertx.core.Launcher'
 
+def groovyVersion = '2.4.8'
 def vertxVersion = '3.3.3'
-def mainVerticleName = 'io.vertx.starter.MainVerticle'
+def mainVerticleName = 'server.groovy'
 def watchForChange = 'src/**/*'
 def doOnChange = 'gradle classes'
 
 dependencies {
+  compile "org.codehaus.groovy:groovy-all:$groovyVersion"
   compile "io.vertx:vertx-core:$vertxVersion"
+  compile "io.vertx:vertx-lang-groovy:$vertxVersion"
+
+  testCompile "org.codehaus.groovy:groovy:$groovyVersion"
   testCompile "junit:junit:4.12"
   testCompile "io.vertx:vertx-unit:$vertxVersion"
+}
+
+sourceSets {
+  main {
+    groovy {
+      srcDirs = ['src/groovy']
+    }
+  }
+}
+
+processResources {
+  from 'src/main/groovy'
 }
 
 shadowJar {
